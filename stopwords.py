@@ -31,8 +31,11 @@ def remove_stopwords(text: str, language: str = DEFAULT_LANGUAGE,
   if not text:
     return [] if list_words else ""
     
+  language = language.lower()
   if language not in SUPPORTED_LANGUAGES:
-    raise ValueError(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
+    sys.stderr.write(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
+    language = 'english'
+#    raise ValueError(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
   
   # Convert the string to lowercase
   text = text.lower()
