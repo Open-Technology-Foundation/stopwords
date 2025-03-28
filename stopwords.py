@@ -33,7 +33,7 @@ def remove_stopwords(text: str, language: str = DEFAULT_LANGUAGE,
     
   language = language.lower()
   if language not in SUPPORTED_LANGUAGES:
-    sys.stderr.write(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
+    sys.stderr.write(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}\n")
     language = 'english'
 #    raise ValueError(f"Language '{language}' not supported. Available languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
   
@@ -106,7 +106,16 @@ def main():
     text = args.text.strip()
   else:
     # Read input from stdin
-    text = sys.stdin.read().strip()
+#    text = sys.stdin.read().strip()
+    # Read as binary first
+    binary_data = sys.stdin.buffer.read()
+    # Then try to decode
+    try:
+      text = binary_data.decode('utf-8')
+    except UnicodeDecodeError:
+      # Handle binary data or try different encoding
+      sys.stderr.write("Warning: Input contains non-UTF-8 data\n")
+      text = binary_data.decode('utf-8', errors='replace')
 
   try:
     filtered_text = remove_stopwords(
@@ -122,13 +131,13 @@ def main():
     else:
       print(filtered_text)
   except ValueError as e:
-    print(f"Error: {str(e)}", file=sys.stderr)
+    sys.stderr.write(f"Error: {str(e)}\n")
     sys.exit(1)
   except LookupError:
     # Already handled in the function
     sys.exit(1)
   except Exception as e:
-    print(f"An unexpected error occurred: {str(e)}", file=sys.stderr)
+    sys.stderr.write(f"An unexpected error occurred: {str(e)}\n")
     sys.exit(1)
 
 if __name__ == '__main__':
