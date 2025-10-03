@@ -9,7 +9,7 @@ This utility removes common stopwords (such as "the", "a", "is") from text, opti
 ## Features
 
 - Remove language-specific stopwords (supports multiple languages via NLTK)
-- Remove punctuation marks and special characters 
+- Remove punctuation marks and special characters
 - Clean up possessive forms and normalize spacing
 - Output as joined text or list of individual words
 - Read from command line arguments or stdin
@@ -17,29 +17,29 @@ This utility removes common stopwords (such as "the", "a", "is") from text, opti
 ## Installation
 
 1. Clone this repository:
-```
+```bash
 git clone https://github.com/yourusername/stopwords.git
 cd stopwords
 ```
 
 2. Create and activate a virtual environment:
-```
+```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install required dependencies:
-```
+```bash
 pip install -r requirements.txt
 ```
 
 4. Download required NLTK resources:
-```
+```bash
 python -m nltk.downloader stopwords punkt
 ```
 
-5. Make the script executable:
-```
+5. Make the script executable (if not already):
+```bash
 chmod +x stopwords
 ```
 
@@ -47,21 +47,28 @@ chmod +x stopwords
 
 ### Command Line
 
-```
+```bash
 # Basic usage
 ./stopwords "Text to process and remove stopwords from"
 
 # Read from stdin
 cat somefile.txt | ./stopwords
+echo "Some text here" | ./stopwords
 
-# Keep punctuation 
+# Keep punctuation
+./stopwords --keep-punctuation "Keep the punctuation, just remove stopwords!"
 ./stopwords -p "Keep the punctuation, just remove stopwords!"
 
 # Output as list of words
+./stopwords --list-words "Output each word on a separate line"
 ./stopwords -w "Output each word on a separate line"
 
 # Use different language stopwords
+./stopwords --language spanish "Hola cómo estás hoy"
 ./stopwords -l spanish "Hola cómo estás hoy"
+
+# Combine options
+./stopwords -l french -p -w "Voici du texte en français!"
 ```
 
 ### Python Module
@@ -86,14 +93,39 @@ spanish_text = remove_stopwords("Hola cómo estás", language="spanish")
 
 ## Supported Languages
 
-The script supports all languages available in NLTK's stopwords corpus, including:
-- english
-- spanish
+The script supports all languages available in NLTK's stopwords corpus. To see the full list of available languages, the script will display them if you specify an unsupported language.
+
+Common languages include:
+- arabic
+- azerbaijani
+- basque
+- bengali
+- catalan
+- chinese
+- danish
+- dutch
+- english (default)
+- finnish
 - french
 - german
+- greek
+- hebrew
+- hinglish
+- hungarian
+- indonesian
 - italian
+- kazakh
+- nepali
+- norwegian
 - portuguese
-- and many more
+- romanian
+- russian
+- slovene
+- spanish
+- swedish
+- tajik
+- tamil
+- turkish
 
 ## License
 
