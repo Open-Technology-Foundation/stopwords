@@ -1,0 +1,37 @@
+#!/bin/bash
+
+_stopwords_completion() {
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  
+  # Short and long options
+  opts="-l --language -p --keep-punctuation -w --list-words -h --help"
+  
+  # Supported languages (from NLTK stopwords corpus)
+  languages="arabic azerbaijani basque bengali bulgarian catalan chinese czech danish dutch english estonian finnish french german greek hebrew hindi hungarian indonesian italian kazakh lithuanian nepali norwegian portuguese romanian russian slovenian spanish swedish tajik turkish"
+  
+  case "${prev}" in
+    -l|--language)
+      COMPREPLY=( $(compgen -W "${languages}" -- ${cur}) )
+      return 0
+      ;;
+    *)
+      ;;
+  esac
+  
+  # Complete options
+  if [[ ${cur} == -* ]]; then
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+  fi
+  
+  # Complete filenames for potential input files
+  COMPREPLY=( $(compgen -f -- ${cur}) )
+  return 0
+}
+
+complete -F _stopwords_completion stopwords
+
+#fin
