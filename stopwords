@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-set -e
-PRG0=$(readlink -fn -- "$0")
-PRGDIR="${PRG0%/*}"
-source "$PRGDIR"/.venv/bin/activate
-"$PRGDIR"/.venv/bin/python "$PRGDIR"/"${PRG0##*/}".py "$@"
+set -euo pipefail
+SCRIPT_PATH=$(realpath -e -- "$0")
+SCRIPT_DIR="${SCRIPT_PATH%/*}"
+source "$SCRIPT_DIR"/.venv/bin/activate
+"$SCRIPT_DIR"/.venv/bin/python "$SCRIPT_DIR"/"${SCRIPT_PATH##*/}".py "$@"
+#fin

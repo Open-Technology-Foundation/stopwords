@@ -1,0 +1,17 @@
+# Development dependencies for stopwords project
+# Install with: pip install -r requirements-dev.txt
+
+# Code formatting
+black==24.10.0
+
+# Linting
+ruff==0.14.4
+
+# Type checking
+mypy==1.18.2
+typing_extensions==4.15.0
+
+# Testing
+coverage==7.11.1
+
+#fin
